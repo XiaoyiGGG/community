@@ -20,6 +20,10 @@ public interface QuestionMapper {
 
     List<Question> selectByExample(QuestionExample example);
 
+    List<Question> selectAll();
+
+    int incView(Question question);
+
     Question selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Question record, @Param("example") QuestionExample example);
@@ -33,4 +37,6 @@ public interface QuestionMapper {
     int updateByPrimaryKeyWithBLOBs(Question record);
 
     int updateByPrimaryKey(Question record);
+
+    List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 }

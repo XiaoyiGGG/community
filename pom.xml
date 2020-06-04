@@ -83,6 +83,13 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
+        <!--pagehelper分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+        </dependency>
     </dependencies>
 
     <build>

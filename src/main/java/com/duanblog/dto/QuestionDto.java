@@ -9,6 +9,8 @@ public class QuestionDto {
 
     private String title;
 
+    private String description;
+
     private Long gmtCreate;
 
     private Long gmtModified;
@@ -23,6 +25,6 @@ public class QuestionDto {
 
     private String tag;
 
-    private String description;
+
     private User user;
 }
