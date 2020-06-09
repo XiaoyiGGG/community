@@ -223,6 +223,12 @@
     view_count = view_count + #{viewCount,jdbcType=INTEGER}
     where id = #{id}
   </update>
+  <update id="incComment" parameterType="com.duanblog.model.Question">
+    update QUESTION
+    set
+    COMMENT_COUNT = COMMENT_COUNT + #{commentCount,jdbcType=INTEGER}
+    where id = #{id}
+  </update>
   <update id="updateByExampleSelective" parameterType="map" >
     update question
     <set >

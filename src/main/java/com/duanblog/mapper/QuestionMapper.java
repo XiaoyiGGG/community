@@ -39,4 +39,6 @@ public interface QuestionMapper {
     int updateByPrimaryKey(Question record);
 
     List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+
+    void incComment(Question question);
 }

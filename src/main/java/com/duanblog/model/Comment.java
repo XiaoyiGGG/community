@@ -1,9 +1,9 @@
 package com.duanblog.model;
 
 public class Comment {
-    private Long id;
+    private Integer id;
 
-    private Long parentId;
+    private Integer parentId;
 
     private Integer type;
 
@@ -15,19 +15,21 @@ public class Comment {
 
     private Long likeCount;
 
-    public Long getId() {
+    private String content;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
@@ -69,5 +71,13 @@ public class Comment {
 
     public void setLikeCount(Long likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 }

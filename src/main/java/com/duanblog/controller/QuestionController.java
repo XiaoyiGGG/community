@@ -1,8 +1,10 @@
 package com.duanblog.controller;
 
+import com.duanblog.dto.CommentDto;
 import com.duanblog.dto.QuestionDto;
 import com.duanblog.model.Question;
 import com.duanblog.model.User;
+import com.duanblog.service.CommentService;
 import com.duanblog.service.QuestionService;
 import com.duanblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/publish")
     public String publish(){
@@ -75,6 +80,8 @@ public class QuestionController {
         QuestionDto questionDTO = questionService.findById(id);
         questionService.incView(id);//增加阅读数
         model.addAttribute("question", questionDTO);
+        List<CommentDto> allComment = commentService.findAllComment(id);
+        model.addAttribute("comments",allComment);
         return "question";
     }
 

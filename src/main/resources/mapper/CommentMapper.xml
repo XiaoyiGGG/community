@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.duanblog.mapper.CommentMapper" >
   <resultMap id="BaseResultMap" type="com.duanblog.model.Comment" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="commentator" property="commentator" jdbcType="INTEGER" />
     <result column="gmt_create" property="gmtCreate" jdbcType="BIGINT" />
     <result column="gmt_modified" property="gmtModified" jdbcType="BIGINT" />
     <result column="like_count" property="likeCount" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, parent_id, type, commentator, gmt_create, gmt_modified, like_count
+    id, parent_id, type, commentator, gmt_create, gmt_modified, like_count, content
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.duanblog.model.CommentExample" >
     select
@@ -85,15 +86,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from comment
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from comment
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.duanblog.model.CommentExample" >
     delete from comment
@@ -104,10 +105,10 @@
   <insert id="insert" parameterType="com.duanblog.model.Comment" >
     insert into comment (id, parent_id, type, 
       commentator, gmt_create, gmt_modified, 
-      like_count)
-    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      like_count, content)
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{commentator,jdbcType=INTEGER}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
-      #{likeCount,jdbcType=BIGINT})
+      #{likeCount,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.duanblog.model.Comment" >
     insert into comment
@@ -133,13 +134,16 @@
       <if test="likeCount != null" >
         like_count,
       </if>
+      <if test="content != null" >
+        content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=BIGINT},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="parentId != null" >
-        #{parentId,jdbcType=BIGINT},
+        #{parentId,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
@@ -156,6 +160,9 @@
       <if test="likeCount != null" >
         #{likeCount,jdbcType=BIGINT},
       </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.duanblog.model.CommentExample" resultType="java.lang.Integer" >
@@ -168,10 +175,10 @@
     update comment
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.parentId != null" >
-        parent_id = #{record.parentId,jdbcType=BIGINT},
+        parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
@@ -188,6 +195,9 @@
       <if test="record.likeCount != null" >
         like_count = #{record.likeCount,jdbcType=BIGINT},
       </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -195,13 +205,14 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update comment
-    set id = #{record.id,jdbcType=BIGINT},
-      parent_id = #{record.parentId,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       commentator = #{record.commentator,jdbcType=INTEGER},
       gmt_create = #{record.gmtCreate,jdbcType=BIGINT},
       gmt_modified = #{record.gmtModified,jdbcType=BIGINT},
-      like_count = #{record.likeCount,jdbcType=BIGINT}
+      like_count = #{record.likeCount,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -210,7 +221,7 @@
     update comment
     <set >
       <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=BIGINT},
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
@@ -227,17 +238,21 @@
       <if test="likeCount != null" >
         like_count = #{likeCount,jdbcType=BIGINT},
       </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.duanblog.model.Comment" >
     update comment
-    set parent_id = #{parentId,jdbcType=BIGINT},
+    set parent_id = #{parentId,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       commentator = #{commentator,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=BIGINT},
       gmt_modified = #{gmtModified,jdbcType=BIGINT},
-      like_count = #{likeCount,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
+      like_count = #{likeCount,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
